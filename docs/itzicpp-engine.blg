@@ -1,0 +1,5 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'itzicpp-engine.blg'
+[35] biber:315> INFO - === Tue Jun 16, 2020, 06:51:04
+[62] Biber.pm:371> INFO - Reading 'itzicpp-engine.bcf'
+[153] Utils.pm:193> WARN - No data sources defined!

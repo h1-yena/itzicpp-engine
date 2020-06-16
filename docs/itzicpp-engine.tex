@@ -1,0 +1,146 @@
+\documentclass[12pt,a4paper]{report}
+% \usepackage[utf8]{inputenc}   % Sin compilador Unicode
+\usepackage[english]{babel}     % Poder utilizar caracteres españoles
+\usepackage{graphicx}           % Importar imágenes
+\usepackage{fancyhdr}           % Modificar la cabecera y el pie de página
+\usepackage[a4paper, margin=1in]{geometry} % Márgenes más ajustados
+\usepackage[dvipsnames]{xcolor} % Emplear colores
+\usepackage{caption}            %
+\usepackage{subcaption}         % Subfigures
+\usepackage{amsmath,amssymb}    % Fórmulas matemáticas
+\usepackage{tabu}               % Formateo de tablas
+\usepackage{array}              % Más formateo de tablas
+\usepackage{listings}           % Código
+\usepackage{mdframed}           % Bordes bonitos
+\usepackage[backend=biber, style=numeric]{biblatex} % Referencias
+\usepackage{csquotes}
+\usepackage{lastpage}           % Referenciar última página
+\usepackage[toc, acronym]{glossaries}% Glosario
+\usepackage[
+	colorlinks=true,
+	linkcolor=black,
+	urlcolor=NavyBlue,
+	citecolor=green,
+	anchorcolor=black]{hyperref}    % Hipervínculos con colores
+
+
+% COLORES ------------------------------------------------------------------------------------------
+\definecolor{light-gray}{gray}{0.95} % Color de stack overflow
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mymuave}{rgb}{0.58,0,0.82}
+
+% BIBLIOGRAFÍA -------------------------------------------------------------------------------------
+%\addbibresource{./referencias.bib}
+
+% FONTS --------------------------------------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault}
+
+% ESPACIADO ----------------------------------------------------------------------------------------
+\setlength{\parskip}{1em}
+
+% NUEVA PÁGINA POR SECCIÓN -------------------------------------------------------------------------
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+
+% CABECERA Y PIE DE DOCUMENTO ----------------------------------------------------------------------
+\fancypagestyle{myheader}{
+	\fancyhf{} % Clear all headers/footers
+	\fancyhead[R]{\MakeUppercase{\leftmark}} % Cabecero a la derecha
+	\fancyhead[L]{\MakeUppercase{C++ Engine Architecture}}
+	\fancyfoot[R]{\textcolor{gray}{PAGE}~\thepage\ |~\pageref{LastPage}} % Número de página
+	\fancyfoot[L]{\includegraphics[width=1em]{imgs/gobbly-icon.png}} % Icono u-tad
+	\renewcommand{\headrulewidth}{1pt} % 1pt header rule
+	\renewcommand{\headrule}{\
+		\hbox to\headwidth{\color{NavyBlue}\leaders\hrule height\headrulewidth\hfill}}
+	\renewcommand{\footrulewidth}{0pt} % No footer rule
+}
+
+% FORMATO CÓDIGO -----------------------------------------------------------------------------------
+\renewcommand{\lstlistingname}{Código}% Listing -> Código
+\renewcommand{\lstlistlistingname}{Lista de \lstlistingname\ s}% Lista de Códigos
+\lstset{
+	backgroundcolor=\color{light-gray},
+	basicstyle=\footnotesize,
+	commentstyle=\color{mygreen},
+	escapeinside={\%*},
+	extendedchars=true,
+	firstnumber=1,
+	keywordstyle=\color{NavyBlue},
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\tiny,
+	rulecolor=\color{black},
+	tabsize=2,
+	showstringspaces=false
+}
+
+% GLOSARIO -----------------------------------------------------------------------------------------
+% \makeglossaries
+% \newglossaryentry{test}
+% {
+%		name={test},
+%		descriptioin={This is a test},
+%		plural={tests}
+% }
+
+% DOCUMENTO ========================================================================================
+\begin{document}
+\pagestyle{empty}
+
+% PÁGINA TÍTULO ------------------------------------------------------------------------------------
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1cm}
+
+		\Huge
+		\textbf{C++ Engine Architecture}
+
+		\vspace{0.5cm}
+		\LARGE
+		An Entity-Relation Model
+
+		\vspace{1.5cm}
+
+		\textbf{Itziar Morales Rodríguez}
+
+		\vfill
+
+		\vspace{0.8cm}
+
+		\includegraphics[width=0.4\textwidth]{imgs/cpp-logo.png}
+
+		\Large
+		Software Engineering and Computational Mathematics\\
+		U-TAD\\
+		Spain\\
+		\today
+
+	\end{center}
+\end{titlepage}
+\pagebreak
+
+% ABSTRACTO ----------------------------------------------------------------------------------------
+\begin{abstract}
+	% TODO
+\end{abstract}
+\pagebreak
+
+% ÍNDICE -------------------------------------------------------------------------------------------
+\tableofcontents
+
+% SECCIONES ========================================================================================
+\pagebreak
+\pagestyle{myheader}
+\setcounter{page}{1}
+
+% INTRODUCCIÓN -------------------------------------------------------------------------------------
+\section{Introduction} % TODO
+\par
+
+% GLOSARIO =========================================================================================
+% \printglossaries
+
+% BIBLIOGRAFÍA =====================================================================================
+% \printbibliography[heading=bibintoc, title={Referencias}]
+
+\end{document}

@@ -1,0 +1,12 @@
+@startuml
+
+(*) --> "Initialization"
+while "IsRunning"
+	--> [true] "ProcessInput"
+	--> "Update"
+	--> "Render"
+endwhile
+--> "Terminate"
+-->(*)
+
+@enduml
