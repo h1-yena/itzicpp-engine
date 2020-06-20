@@ -34,10 +34,10 @@ void Entity::Update(float deltaTime)
 	}
 }
 
-void Entity::Render()
+void Entity::Render(SDL_Renderer& renderer)
 {
 	for (auto& component : components) {
-		component->Render();
+		component->Render(renderer);
 	}
 }
 

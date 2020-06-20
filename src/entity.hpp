@@ -16,8 +16,9 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <SDL2/SDL_render.h>
+#include "./components/component.hpp"
 
-class Component;
 class EntityManager;
 
 class Entity
@@ -35,8 +36,19 @@ public:
 
 	// Game Logic
 	void Update(float deltaTime);
-	void Render();
+	void Render(SDL_Renderer& renderer);
 	void Destroy();
+
+	// Add Generic Component
+	template <typename T, typename... TArgs>
+	T& AddComponent(TArgs&& ... args)
+	{
+		T* component = new T(std::forward<TArgs>(args)...);
+		component->owner = this;
+		components.emplace_back(component);
+		component->Initialize();
+		return* component;
+	}
 
 	// Getters & Setters
 	bool IsActive() const;

@@ -15,14 +15,16 @@
 // =====================================================================================
 #pragma once
 
+#include <SDL2/SDL_render.h>
+
 class Entity;
 
 class Component
 {
 public:
 	Entity* owner;
-	virtual ~Component() = 0;
+	virtual ~Component() {};
 	virtual void Initialize() = 0;
 	virtual void Update(float deltaTime) = 0;
-	virtual void Render() = 0;
+	virtual void Render(SDL_Renderer& renderer) = 0;
 };

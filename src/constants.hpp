@@ -13,6 +13,7 @@
 //   Organization:  UTAD
 //
 // =====================================================================================
+#pragma once
 
 const unsigned int WINDOW_WIDTH  = 1600;
 const unsigned int WINDOW_HEIGHT = 1200;

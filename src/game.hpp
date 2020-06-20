@@ -17,6 +17,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "./entityManager.hpp"
+#include "./entity.hpp"
+#include "./components/component.hpp"
 
 class EntityManager;
 
@@ -52,6 +55,7 @@ public:
 	void Update();
 	void Render();
 	void Destroy();
+	void LoadLevel(int levelNum);
 
 	bool IsRunning() const;
 };

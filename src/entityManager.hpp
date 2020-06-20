@@ -18,6 +18,7 @@
 #include "./entity.hpp"
 #include "./components/component.hpp"
 #include <vector>
+#include <SDL2/SDL_render.h>
 
 class EntityManager
 {
@@ -32,13 +33,14 @@ public:
 
 	// Game Logic
 	void Update(float deltaTime);
-	void Render();
-	void Destroy();
+	void Render(SDL_Renderer& renderer);
+	void ClearData();
 
 	// Utility Functions
 	bool HasNoEntities() const;
 	Entity& AddEntity(const std::string& entityName);
 	std::vector<Entity*> GetEntities() const;
+	unsigned int GetEntityCount() const;
 
 	// Destructor
 	~EntityManager();

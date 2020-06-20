@@ -30,10 +30,10 @@ void EntityManager::Update(float deltaTime)
 	}
 }
 
-void EntityManager::Render()
+void EntityManager::Render(SDL_Renderer& renderer)
 {
 	for (auto& entity : entities) {
-		entity->Render();
+		entity->Render(renderer);
 	}
 }
 
@@ -44,9 +44,9 @@ bool EntityManager::HasNoEntities() const
 
 Entity& EntityManager::AddEntity(const std::string& entityName)
 {
-	Entity* newEntity = new Entity(*this, entityName);
-	entities.push_back(newEntity);
-	return *newEntity;
+	Entity* entity = new Entity(*this, entityName);
+	entities.emplace_back(entity);
+	return *entity;
 }
 
 std::vector<Entity*> EntityManager::GetEntities() const
@@ -54,16 +54,22 @@ std::vector<Entity*> EntityManager::GetEntities() const
 	return entities;
 }
 
-void EntityManager::Destroy()
+unsigned int EntityManager::GetEntityCount() const
 {
-	if (!HasNoEntities()) {
-		for (auto& entity : entities) {
-			delete entity;
-		}
+	return entities.size();
+}
+
+void EntityManager::ClearData()
+{
+	for (auto& entity : entities) {
+		entity->Destroy();
 	}
 }
 
 EntityManager::~EntityManager()
 {
-	Destroy();
+	ClearData();
+	for (auto& entity : entities) {
+		delete entity;
+	}
 }
