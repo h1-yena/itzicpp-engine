@@ -15,14 +15,20 @@
 // =====================================================================================
 #pragma once
 
+#include <SDL2/SDL_render.h>
 #include <glm/glm.hpp>
 #include "./component.hpp"
 #include "../entityManager.hpp"
 #include <SDL2/SDL.h>
 
+#include "../game.hpp"
+
 class TransformComponent : public Component
 {
 private:
+	// Sprite should be able to access the transform.
+	friend class SpriteComponent;
+
 	// Positional attributes
 	glm::vec2 position;
 	glm::vec2 velocity;
@@ -53,17 +59,13 @@ public:
 		position += velocity * deltaTime;
 	}
 
-	void Render(SDL_Renderer& renderer) override
+	void Render(SDL_Renderer* renderer) override
 	{
-		SDL_Rect transformRectangle {
-			(int)position.x,
-			(int)position.y,
-			width,
-			height
-		};
-
-		SDL_SetRenderDrawColor(&renderer, 255, 255, 255, 255);
-		SDL_RenderFillRect(&renderer, &transformRectangle);
+		// TODO: Draw debug rectangle.
+		SDL_Rect debugRect = { (int)position.x, (int)position.y, width, height };
+		SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+		SDL_RenderDrawRect(renderer, &debugRect);
 	}
+
 	~TransformComponent() override {};
 };

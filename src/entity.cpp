@@ -29,14 +29,14 @@ Entity::Entity(EntityManager& manager, const std::string& name)
 
 void Entity::Update(float deltaTime)
 {
-	for (auto& component  : components) {
+	for (auto&& [type, component]  : components) {
 		component->Update(deltaTime);
 	}
 }
 
-void Entity::Render(SDL_Renderer& renderer)
+void Entity::Render(SDL_Renderer* renderer)
 {
-	for (auto& component : components) {
+	for (auto&& [type, component]  : components) {
 		component->Render(renderer);
 	}
 }
@@ -54,8 +54,6 @@ bool Entity::IsActive() const
 Entity::~Entity()
 {
 	if (components.empty()) {
-		for (auto& component : components) {
-			delete component;
-		}
+		components.clear();
 	}
 }

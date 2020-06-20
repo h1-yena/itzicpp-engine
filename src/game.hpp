@@ -17,11 +17,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "./entityManager.hpp"
 #include "./entity.hpp"
 #include "./components/component.hpp"
 
 class EntityManager;
+class AssetManager;
 
 class Game
 {
@@ -34,6 +34,7 @@ private:
 
 	// Managers
 	EntityManager& entityManager;
+	AssetManager& assetManager;
 
 	// Screen parameters
 	int screenWidth;
@@ -57,5 +58,7 @@ public:
 	void Destroy();
 	void LoadLevel(int levelNum);
 
+	// Getters
+	SDL_Renderer* GetRenderer() const;
 	bool IsRunning() const;
 };

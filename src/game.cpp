@@ -14,24 +14,20 @@
 //
 // =====================================================================================
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_error.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_keyboard.h>
-#include <SDL2/SDL_keycode.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_scancode.h>
-#include <SDL2/SDL_timer.h>
-#include <SDL2/SDL_video.h>
 #include <glm/glm.hpp>
 #include <iostream>
 
-#include "./constants.hpp"
 #include "./game.hpp"
+#include "./constants.hpp"
 #include "./components/transformComponent.hpp"
+#include "./components/spriteComponent.hpp"
+#include "./assetManager.hpp"
+#include "./entityManager.hpp"
 
 Game::Game()
 	: isRunning(false)
 	, entityManager(EntityManager::GetInstance())
+	, assetManager(AssetManager::GetInstance())
 	, screenWidth(0)
 	, screenHeight(0)
 	, window(nullptr)
@@ -89,8 +85,14 @@ void Game::Initialize(unsigned int screenWidth, unsigned int screenHeight)
 
 void Game::LoadLevel(int levelNum)
 {
-	Entity& projectile = entityManager.AddEntity("Projectile");
-	projectile.AddComponent<TransformComponent>(300, 300, 300, 300, 1, 1, 150, 150);
+	// 1. Load Assets
+	std::string textureFilePath = "./assets/images/jungle/tank-big-right.png";
+	assetManager.AddTexture("tank-image", textureFilePath.c_str(), renderer);
+
+	// 2. Load Entities
+	Entity& tank = entityManager.AddEntity("tank");
+	tank.AddComponent<TransformComponent>(300, 300, 20, 20, 1, 1, 32, 32);
+	tank.AddComponent<SpriteComponent>("tank-image");
 }
 
 void Game::HandleInput()
@@ -153,8 +155,12 @@ void Game::Render()
 	// 1. Clear back buffer
 	SDL_RenderClear(renderer);
 
+	if (entityManager.HasNoEntities()) {
+		return;
+	}
+
 	// 2. Draw all game objects
-	entityManager.Render(*renderer);
+	entityManager.Render(renderer);
 
 	// 3. Swap front and back buffers
 	SDL_RenderPresent(renderer);
@@ -171,6 +177,11 @@ void Game::Destroy()
 	SDL_Quit();
 
 	std::cout << "Game Terminated" << std::endl;
+}
+
+SDL_Renderer* Game::GetRenderer() const
+{
+	return renderer;
 }
 
 bool Game::IsRunning() const

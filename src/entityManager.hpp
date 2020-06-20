@@ -33,7 +33,7 @@ public:
 
 	// Game Logic
 	void Update(float deltaTime);
-	void Render(SDL_Renderer& renderer);
+	void Render(SDL_Renderer* renderer);
 	void ClearData();
 
 	// Utility Functions

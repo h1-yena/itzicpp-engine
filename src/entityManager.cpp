@@ -30,7 +30,7 @@ void EntityManager::Update(float deltaTime)
 	}
 }
 
-void EntityManager::Render(SDL_Renderer& renderer)
+void EntityManager::Render(SDL_Renderer* renderer)
 {
 	for (auto& entity : entities) {
 		entity->Render(renderer);
