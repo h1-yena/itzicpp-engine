@@ -1,11 +1,11 @@
 // =====================================================================================
 //
-//       Filename:  constants.hpp
+//       Filename:  component.hpp
 //
-//    Description:  File for configuring the engine constants.
+//    Description:  Base class that all components inherit from.
 //
 //        Version:  1.0
-//        Created:  06/17/2020 02:53:00 AM
+//        Created:  06/20/2020 05:04:18 AM
 //       Revision:  none
 //       Compiler:  g++
 //
@@ -13,9 +13,16 @@
 //   Organization:  UTAD
 //
 // =====================================================================================
+#pragma once
 
-const unsigned int WINDOW_WIDTH  = 1600;
-const unsigned int WINDOW_HEIGHT = 1200;
+class Entity;
 
-const unsigned int FPS = 60;
-const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
+class Component
+{
+public:
+	Entity* owner;
+	virtual ~Component() = 0;
+	virtual void Initialize() = 0;
+	virtual void Update(float deltaTime) = 0;
+	virtual void Render() = 0;
+};

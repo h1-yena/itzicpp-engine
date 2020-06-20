@@ -5,10 +5,15 @@ OBJS = ./src/*.cpp
 CC = clang++
 
 # Compiler flags specifying additional compilation options
-COMPILER_FLAGS = -std=c++20
+COMPILER_FLAGS = -std=c++20 \
+								 -Wfatal-errors
 
 # Linking flags specifying libraries being linked against
-LINKER_FLAGS = -llua -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
+LINKER_FLAGS = -llua \
+							 -lSDL2 \
+							 -lSDL2_image \
+							 -lSDL2_ttf \
+							 -lSDL2_mixer
 
 # Specifies the executable name
 OBJ_NAME = itzicpp

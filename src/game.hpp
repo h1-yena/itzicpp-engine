@@ -18,6 +18,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+class EntityManager;
+
 class Game
 {
 private:
@@ -26,6 +28,9 @@ private:
 
 	// Game attributes
 	bool isRunning;
+
+	// Managers
+	EntityManager& entityManager;
 
 	// Screen parameters
 	int screenWidth;
@@ -43,7 +48,7 @@ public:
 	static Game& GetInstance();
 
 	// Game logic
-	void Initialize(int screenWidth, int screenHeight);
+	void Initialize(unsigned int screenWidth, unsigned int screenHeight);
 	void Update();
 	void Render();
 	void Destroy();

@@ -1,11 +1,11 @@
 // =====================================================================================
 //
-//       Filename:  constants.hpp
+//       Filename:  transform.hpp
 //
-//    Description:  File for configuring the engine constants.
+//    Description:
 //
 //        Version:  1.0
-//        Created:  06/17/2020 02:53:00 AM
+//        Created:  06/20/2020 05:41:41 AM
 //       Revision:  none
 //       Compiler:  g++
 //
@@ -13,9 +13,19 @@
 //   Organization:  UTAD
 //
 // =====================================================================================
+#pragma once
 
-const unsigned int WINDOW_WIDTH  = 1600;
-const unsigned int WINDOW_HEIGHT = 1200;
+#include <glm/glm.hpp>
+#include "./component.hpp"
 
-const unsigned int FPS = 60;
-const unsigned int FRAME_TARGET_TIME = 1000 / FPS;
+class Transform : public Component
+{
+private:
+	glm::vec2 pos;
+	float rot;
+public:
+	void Initialize() override;
+	void Update(float deltaTime) override;
+	void Render() override;
+	~Transform();
+};

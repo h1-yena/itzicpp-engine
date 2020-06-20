@@ -20,13 +20,23 @@
 #include <SDL2/SDL_keycode.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_scancode.h>
+#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
+#include <glm/glm.hpp>
 #include <iostream>
-#include <assert.h>
-#include "game.hpp"
+#include "./constants.hpp"
+#include "./entityManager.hpp"
+#include "./game.hpp"
+#include "entity.hpp"
+
+glm::vec2 pos = glm::vec2(100.0f, 100.0f);
+glm::vec2 vel = glm::vec2(300.0f, 300.0f);
+int rectW = 150.0f;
+int rectH = 150.0f;
 
 Game::Game()
 	: isRunning(false)
+	, entityManager(EntityManager::GetInstance())
 	, screenWidth(0)
 	, screenHeight(0)
 	, window(nullptr)
@@ -39,10 +49,8 @@ Game& Game::GetInstance()
 	return instance;
 }
 
-void Game::Initialize(int screenWidth, int screenHeight)
+void Game::Initialize(unsigned int screenWidth, unsigned int screenHeight)
 {
-	// End program if screensize is incorrect.
-	assert(screenWidth > 0 || screenHeight > 0);
 	this->screenWidth = screenWidth;
 	this->screenHeight = screenHeight;
 
@@ -77,8 +85,9 @@ void Game::Initialize(int screenWidth, int screenHeight)
 		exit(1);
 	}
 
-	std::cout << "Game Initialized" << std::endl;
 	isRunning = true;
+
+	std::cout << "Game Initialized" << std::endl;
 }
 
 void Game::HandleInput()
@@ -108,41 +117,67 @@ void Game::HandleInput()
 
 void Game::Update()
 {
+	// Time-step variables.
+	static int ticksLastFrame = 0;
+
+	// Wait until 16.6ms (or 60fps) since last frame.
+	int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
+	if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
+		SDL_Delay(timeToWait);
+	}
+
+	// Delta time is the difference in ticks from last frame converted to seconds.
+	float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;
+
+	// Clamp deltaTime to a minimum value.
+	deltaTime = (deltaTime > 0.05) ? 0.05f : deltaTime;
+
+	// Sets the new ticcks for the current frame to be used in the next pass.
+	ticksLastFrame = SDL_GetTicks();
+
+	// NOTE: Debug triangle.
+	pos.x += vel.x * deltaTime;
+	pos.y += vel.y * deltaTime;
+
+	// Clamp debug triangle to screen width.
+	if (pos.x >= (screenWidth - rectW) || pos.x <= 0) {
+		vel.x *= -1;
+	}
+	if (pos.y >= (screenHeight - rectH) || pos.y <= 0) {
+		vel.y *= -1;
+	}
+
+	// Tell entity manager to update all entities
+	entityManager.Update(deltaTime);
+
 	HandleInput();
 	std::cout << "Game Updated" << std::endl;
 }
 
 void Game::Render()
 {
-	// Draw background
+	// 0. Set background color
 	SDL_SetRenderDrawColor(renderer, 40, 42, 54, 255);
+
+	// 1. Clear back buffer
 	SDL_RenderClear(renderer);
 
+	// 2. Draw all game objects
 	// Draw test rect
-	static SDL_Rect rect {
-		screenWidth / 2,
-		screenHeight / 2,
-		100,
-		100
+	SDL_Rect rect {
+		(int)pos.x,
+		(int)pos.y,
+		rectW,
+		rectH
 	};
 
-	static int xVel = 1;
-	static int yVel = 1;
-
-	rect.x += xVel;
-	rect.y += yVel;
-
-	if (rect.x >= (screenWidth - rect.w) || rect.x <= 0) {
-		xVel *= -1;
-	}
-	if (rect.y >= (screenHeight - rect.h) || rect.y <= 0) {
-		yVel *= -1;
-	}
-
+	// Draw rectangle
 	SDL_SetRenderDrawColor(renderer, 255, 121, 198, 255);
 	SDL_RenderFillRect(renderer, &rect);
 
-	// Swap buffers
+	entityManager.Render();
+
+	// 3. Swap front and back buffers
 	SDL_RenderPresent(renderer);
 
 	std::cout << "Game Rendered" << std::endl;
