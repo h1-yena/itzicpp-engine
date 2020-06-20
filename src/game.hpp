@@ -13,7 +13,10 @@
 //   Organization:  UTAD
 //
 // =====================================================================================
+#pragma once
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 class Game
 {
@@ -29,8 +32,8 @@ private:
 	int screenHeight;
 
 	// SDL Rendering attributes
-	SDL_Window* window;
-	SDL_Surface* screenSurface;
+	SDL_Window*  window;
+	SDL_Renderer* renderer;
 
 	// Game Logic
 	void HandleInput();
@@ -43,7 +46,7 @@ public:
 	void Initialize(int screenWidth, int screenHeight);
 	void Update();
 	void Render();
-	void Terminate();
+	void Destroy();
 
 	bool IsRunning() const;
 };

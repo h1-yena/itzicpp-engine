@@ -15,19 +15,20 @@
 // =====================================================================================
 #include <iostream>
 #include "game.hpp"
+#include "constants.hpp"
 
 int main(int arg, char* args[])
 {
 	Game game = Game::GetInstance();
 
-	game.Initialize(1600, 1200);
+	game.Initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	while (game.IsRunning()) {
 		game.Update();
 		game.Render();
 	}
 
-	game.Terminate();
+	game.Destroy();
 
 	return 0;
 }
