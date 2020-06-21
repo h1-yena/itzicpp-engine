@@ -137,7 +137,7 @@ void Game::Update()
 	// Clamp deltaTime to a minimum value.
 	deltaTime = (deltaTime > 0.05) ? 0.05f : deltaTime;
 
-	// Sets the new ticcks for the current frame to be used in the next pass.
+	// Sets the new ticks for the current frame to be used in the next pass.
 	ticksLastFrame = SDL_GetTicks();
 
 	// Tell entity manager to update all entities
